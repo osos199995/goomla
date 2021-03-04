@@ -1,0 +1,116 @@
+<?php
+
+namespace App\Http\Controllers\admin;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Discount;
+use App\Subcategory;
+
+class discounts extends Controller
+{
+    public function index()
+    {
+        $discounts=Discount::all();
+        return view('admin.discounts.index',compact('discounts'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $discounts= Discount::all();
+        $subcategories= Subcategory::all();
+        return view('admin.discounts.create',compact('discounts','subcategories'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+        'from_price' => 'required',  
+        'to_price' => 'required',  
+        'discount' => 'required',  
+        'date' => 'required',  
+        'subcategory_id' => 'required',  
+        ]);
+        $discounts = new Discount();
+        $discounts->from_price = $request->from_price;
+        $discounts->to_price = $request->to_price;
+        $discounts->discount = $request->discount;
+        $discounts->date = $request->date;
+        $discounts->subcategory_id = $request->subcategory_id;
+        $discounts->save();
+        return redirect('admin/discounts');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $discounts= Discount::find($id);
+        $subcategories= Subcategory::all();
+        return view('admin.discounts.edit',compact('discounts','subcategories'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $data = $request->validate([
+        'from_price' => 'required',  
+        'to_price' => 'required',  
+        'discount' => 'required',  
+        'date' => 'required',  
+        'subcategory_id' => 'required',  
+        ]);
+        $discounts = Discount::find($id);
+        $discounts->from_price = $request->from_price;
+        $discounts->to_price = $request->to_price;
+        $discounts->discount = $request->discount;
+        $discounts->date = $request->date;
+        $discounts->subcategory_id = $request->subcategory_id;
+        $discounts->save();
+        return redirect('admin/discounts');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $discounts = Discount::destroy($id);
+        return back(); 
+    }
+}

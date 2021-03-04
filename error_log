@@ -1,0 +1,2 @@
+[18-Jan-2021 13:09:25 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\api\users::show() in /home/mostafa/meeza.innovations-eg.com/app/Http/Controllers/api/users.php on line 56
+[18-Jan-2021 13:10:00 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\api\users::show() in /home/mostafa/meeza.innovations-eg.com/app/Http/Controllers/api/users.php on line 56
